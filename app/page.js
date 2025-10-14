@@ -33,7 +33,8 @@ export default function HomePage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
-      router.push('/games');
+router.push('/thank-you');
+
     } catch (err) {
       setError(err.message);
     } finally {

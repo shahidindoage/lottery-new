@@ -24,6 +24,19 @@ export function middleware(req) {
     return NextResponse.next();
   }
 
+  // 🎫 Thank You Page
+  if (pathname.startsWith('/thank-you')) {
+    const lotteryCookie = cookie.get('lottery_user');
+    if (!lotteryCookie) {
+      return NextResponse.redirect(new URL('/', req.url));
+    }
+    //  REMOVE THIS LINE (do not auto-delete cookie)
+    // res.cookies.delete('lottery_user');
+    const res = NextResponse.next();
+    res.cookies.delete('lottery_user');
+    return res;
+  }
+
   // 🧑‍💼 Protect Admin Dashboard
   if (pathname.startsWith('/admin/dashboard')) {
     const adminAuth = cookie.get('admin_auth');
@@ -36,5 +49,5 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/lottery', '/games', '/admin/dashboard'],
+  matcher: ['/lottery', '/games', '/admin/dashboard','/thank-you'],
 };
