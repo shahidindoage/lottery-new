@@ -489,8 +489,8 @@
         }
 
         .back {
-          background-color: #34d399;
-          color: white;
+          background-color: #ffffff;
+          color: rgb(0, 0, 0);
           font-weight: bold;
           transform: rotateY(180deg);
           opacity: 0;
