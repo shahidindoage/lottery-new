@@ -8,13 +8,12 @@ datasource db {
 }
 
 model LotterySubmission {
-  id              Int      @id @default(autoincrement())
-  name            String
-  phone           String?
-  email           String   @unique
-  dob             DateTime?
-  address         String?
-  accepted_terms  Boolean
+  id               Int      @id @default(autoincrement())
+  uniqueId         String   @unique @default(dbgenerated("LPAD((FLOOR(RANDOM() * 999999))::text, 6, '0')"))
+  name             String
+  phone            String?
+  accepted_terms   Boolean
   accepted_privacy Boolean
-  createdAt       DateTime @default(now())
+  createdAt        DateTime @default(now())
 }
+

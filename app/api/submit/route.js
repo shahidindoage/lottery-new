@@ -6,39 +6,36 @@ const prisma = new PrismaClient();
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { name, phone, email, dob, address, terms, privacy } = body;
+    const { name, phone, terms, privacy } = body;
 
-    if (!name || !email || !terms || !privacy) {
+    // ✅ Validate required fields
+    if (!name || !terms || !privacy) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
+    // ✅ Create new lottery submission
     const newEntry = await prisma.lotterySubmission.create({
       data: {
         name,
         phone,
-        email,
-        dob: dob ? new Date(dob) : null,
-        address,
         accepted_terms: terms,
         accepted_privacy: privacy,
+      
       },
     });
 
     // ✅ Set temporary cookie for access
-    const res = NextResponse.json({ success: true });
-    res.cookies.set('lottery_user', newEntry.id.toString(), {
+    const res = NextResponse.json({ success: true ,uniqueId: newEntry.uniqueId});
+    res.cookies.set('lottery_user', newEntry.uniqueId, {
       path: '/',
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60, // 1 minute access
+      maxAge: 60, // 1 minute
     });
 
     return res;
   } catch (err) {
     console.error(err);
-    if (err.code === 'P2002') {
-      return NextResponse.json({ error: 'Email already registered' }, { status: 409 });
-    }
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

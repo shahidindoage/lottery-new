@@ -42,11 +42,11 @@ export default async function AdminDashboard() {
         <thead>
           <tr>
             {/* <th>ID</th> */}
+            <th>Customer ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>DOB</th>
-            <th>Address</th>
+           
+            <th>WhatsApp Number</th>
+          
             <th>Terms</th>
             <th>Privacy</th>
             <th>Submitted At</th>
@@ -63,11 +63,11 @@ export default async function AdminDashboard() {
           {submissions.map((s) => (
             <tr key={s.id}>
               {/* <td>{s.id}</td> */}
+              <td>{s.uniqueId}</td>
               <td>{s.name}</td>
-              <td>{s.email}</td>
+             
               <td>{s.phone || '-'}</td>
-              <td>{s.dob ? new Date(s.dob).toLocaleDateString() : '-'}</td>
-              <td>{s.address || '-'}</td>
+              
               <td>{s.accepted_terms ? 'Yes' : 'No'}</td>
               <td>{s.accepted_privacy ? 'Yes' : 'No'}</td>
               <td>{new Date(s.createdAt).toLocaleString()}</td>

@@ -1,11 +1,9 @@
 -- CreateTable
 CREATE TABLE "LotterySubmission" (
     "id" SERIAL NOT NULL,
+    "uniqueId" TEXT NOT NULL DEFAULT LPAD((FLOOR(RANDOM() * 999999))::text, 6, '0'),
     "name" TEXT NOT NULL,
     "phone" TEXT,
-    "email" TEXT NOT NULL,
-    "dob" TIMESTAMP(3),
-    "address" TEXT,
     "accepted_terms" BOOLEAN NOT NULL,
     "accepted_privacy" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -14,4 +12,4 @@ CREATE TABLE "LotterySubmission" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "LotterySubmission_email_key" ON "LotterySubmission"("email");
+CREATE UNIQUE INDEX "LotterySubmission_uniqueId_key" ON "LotterySubmission"("uniqueId");
