@@ -30,8 +30,7 @@ export default function HomePage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
-      router.push(`/thank-you?id=${data.uniqueId}`);
-      // console.log(data)
+      router.push('/thank-you');
     } catch (err) {
       setError(err.message);
     } finally {

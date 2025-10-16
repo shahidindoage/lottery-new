@@ -1,16 +1,17 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 export default function ThankYouPage() {
   const [lang, setLang] = useState('en');
   const [customerId, setCustomerId] = useState('');
-  const searchParams = useSearchParams();
-  
+
+  // Generate 6-digit random ID on mount
   useEffect(() => {
-    const id = searchParams.get('id');
-    if (id) setCustomerId(id);
-  }, [searchParams]);
+    const generateId = () => {
+      return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+    };
+    setCustomerId(generateId());
+  }, []);
 
   const t = translations[lang];
 
@@ -29,8 +30,18 @@ export default function ThankYouPage() {
     }}>
       {/* Language Toggle */}
       <div className="lang-toggle" style={{ marginBottom: 20 }}>
-        <button onClick={() => setLang('en')} style={{ background: lang==='en'?'#f5c400':'transparent', color: lang==='en'?'#000':'#fff', marginRight: 8 }}>EN</button>
-        <button onClick={() => setLang('ru')} style={{ background: lang==='ru'?'#f5c400':'transparent', color: lang==='ru'?'#000':'#fff' }}>RU</button>
+        <button
+          onClick={() => setLang('en')}
+          style={{ background: lang==='en'?'#f5c400':'transparent', color: lang==='en'?'#000':'#fff', marginRight: 8 }}
+        >
+          EN
+        </button>
+        <button
+          onClick={() => setLang('ru')}
+          style={{ background: lang==='ru'?'#f5c400':'transparent', color: lang==='ru'?'#000':'#fff' }}
+        >
+          RU
+        </button>
       </div>
 
       <h1 style={{ fontSize: '2.2rem', color: '#ffd700', marginBottom: 10 }}>🎉 {t.thankYou}</h1>
